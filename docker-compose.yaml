@@ -1,0 +1,15 @@
+version: '3'
+services: 
+  web:
+    build: .
+    ports: ["3000:3000"]
+    volumes: 
+      - app/node-modules  
+      - .:/app
+  tests: 
+    build: .
+    ports: ["3000:3000"]
+    volumes: 
+      - app/node-modules  
+      - .:/app
+    command: ["yarn, test"]
