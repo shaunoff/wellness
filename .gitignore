@@ -12,7 +12,7 @@
 /build
 
 # misc
-.terraform
+/.terraform
 terraform.tfstate.d
 .DS_Store
 .env.local
