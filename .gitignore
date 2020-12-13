@@ -13,7 +13,8 @@
 
 # misc
 /.terraform
-terraform.tfstate.d
+terraform.tfstate
+terraform.tfstate.backup
 .DS_Store
 .env.local
 .env.development.local
