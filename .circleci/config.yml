@@ -39,14 +39,14 @@ workflows:
   build-and-deploy:
     jobs:
       - build:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
       - deploy:
-        requires:
-          - build
-            filters:
-              branches:
-                only:
-                  - master
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
