@@ -26,9 +26,9 @@ export interface RatingFieldProps extends FieldProps {
 
 const RatingField: React.FC<RatingFieldProps> = (props: RatingFieldProps) => {
   const classes = useStyles()
-  const { field, form, disabled, label, max = 5, readOnly } = props
+  const { field, form, label, max = 5, readOnly } = props
   const { name, value } = field
-  const { touched, errors, isSubmitting } = form
+  const { touched, errors } = form
 
   const fieldError = getIn(errors, name)
   const showError = getIn(touched, name) && !!fieldError

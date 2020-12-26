@@ -1,13 +1,12 @@
-import React, { RefObject, useState, useCallback, SetStateAction, Dispatch } from 'react'
+import React, { RefObject, useCallback, SetStateAction, Dispatch, ChangeEvent } from 'react'
 import * as Yup from 'yup'
-import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-import { Formik, Form, Field, ErrorMessage, FormikProps } from 'formik'
-import { TextField, RadioGroup, Select } from 'formik-material-ui'
-import { gql, useMutation, useQuery, useSubscription } from '@apollo/client'
-import CheckboxGroupField, { CheckboxGroupOption } from '../form/CheckboxGroupField'
+import { Formik, Form, Field, FormikProps } from 'formik'
+import { TextField } from 'formik-material-ui'
+import { gql, useMutation, useQuery } from '@apollo/client'
+import CheckboxGroupField from '../form/CheckboxGroupField'
 import RatingField from '../form/RatingField'
-import ExerciseDetailsTable, { IExerciseDetails } from './ExerciseDetailsTable'
+import { IExerciseDetails } from './ExerciseDetailsTable'
 import { Typography } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
 import Muscles, { IMuscle } from './Muscles'
@@ -27,14 +26,14 @@ interface IAddExerciseDetails {
 }
 
 const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, setOpen }: IAddExerciseDetails) => {
-  const [createExerciseDetail, { data }] = useMutation(CREATE_EXERCISE_DETAIL)
+  const [createExerciseDetail] = useMutation(CREATE_EXERCISE_DETAIL)
   const [updateExerciseDetail] = useMutation(UPDATE_EXERCISE_DETAIL)
-  const { data: muscleGroups, loading } = useQuery<MusclesData>(GET_MUSCLES)
+  const { data: muscleGroups } = useQuery<MusclesData>(GET_MUSCLES)
   const normalizeExerciseDetail = useCallback((): ExerciseDetailsValues => {
     if (!editData) {
       return initialValues
     }
-    const values: any = { ...editData }
+    const values: ExerciseDetailsValues = { ...editData, primaryMuscleId: '', secondaryMuscles: [] }
     values.primaryMuscleId =
       editData && ensure(editData.muscles.find((muscles) => muscles.type === 'primary')).muscle.id
     values.secondaryMuscles =
@@ -61,7 +60,7 @@ const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, 
       validationSchema={schema}
       enableReinitialize
     >
-      {({ isSubmitting, submitForm, values, setFieldValue, errors }) => {
+      {({ values, setFieldValue }) => {
         if (!muscleGroups) return <div>Loading</div>
         return (
           <Box display="flex">
@@ -83,7 +82,7 @@ const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, 
                   component={TextField}
                   name="primaryMuscleId"
                   type="text"
-                  onChange={(event: any) => {
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const { value } = event.target
                     const muscle = muscleGroups && muscleGroups.muscle.find((muscle) => value === muscle.id)
                     if (muscle) {
@@ -221,15 +220,9 @@ interface MusclesData {
   muscle: IMuscle[]
 }
 
-export interface ExerciseDetailsValues {
-  id: string | number
-  exerciseName: string
-  equipment: string
-  type: string
-  difficulty: number
+export interface ExerciseDetailsValues extends IExerciseDetails {
   primaryMuscleId: number | string
   secondaryMuscles: IMuscle[]
-  comments: string
 }
 
 const initialValues: ExerciseDetailsValues = {
@@ -241,6 +234,7 @@ const initialValues: ExerciseDetailsValues = {
   primaryMuscleId: '',
   secondaryMuscles: [],
   comments: '',
+  muscles: [],
 }
 
 const Spacer = () => <div style={{ height: '16px' }} />

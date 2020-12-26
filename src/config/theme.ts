@@ -1,5 +1,5 @@
-import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
-import * as colorManipulator from '@material-ui/core/styles/colorManipulator'
+import { createMuiTheme } from '@material-ui/core/styles'
+//import * as colorManipulator from '@material-ui/core/styles/colorManipulator'
 
 // declare module '@material-ui/core/styles/createMuiTheme' {
 //   interface ThemeOptions {
@@ -93,7 +93,9 @@ const baseTheme = {
   props: {
     MuiTextField: {
       //https://github.com/microsoft/TypeScript/issues/8289
+      // eslint-disable-next-line
       variant: 'outlined' as any,
+      // eslint-disable-next-line
       size: 'small' as any,
     },
     MuiPaper: {

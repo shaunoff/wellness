@@ -1,9 +1,8 @@
 import React from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox'
-import MuiRadioGroup, { RadioGroupProps as MuiRadioGroupProps } from '@material-ui/core/RadioGroup'
-import { FieldProps, getIn } from 'formik'
+import Checkbox from '@material-ui/core/Checkbox'
+import { FieldProps } from 'formik'
 
 export interface CheckboxGroupOption {
   id: string
@@ -20,16 +19,16 @@ export interface CheckboxGroupProps extends FieldProps {
   options: [CheckboxGroupOption]
 }
 
-const CheckboxGroupField = (props: CheckboxGroupProps) => {
-  const { field, form, disabled, options } = props
+const CheckboxGroupField: React.FC<CheckboxGroupProps> = (props: CheckboxGroupProps) => {
+  const { field, form, options } = props
 
   const { name, value: selectedValues } = field
-  const { touched, errors, isSubmitting } = form
+  //const { errors } = form
 
-  const fieldError = getIn(errors, name)
-  const showError = getIn(touched, name) && !!fieldError
+  //const fieldError = getIn(errors, name)
+  //const showError = getIn(touched, name) && !!fieldError
 
-  const handleChange = (option: CheckboxGroupOption) => {
+  const handleChange = (option: CheckboxGroupOption): void => {
     const index = selectedValues.findIndex((value: CheckboxGroupOption) => value.id === option.id)
     const newValues =
       index >= 0

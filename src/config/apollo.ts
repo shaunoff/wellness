@@ -1,4 +1,4 @@
-import { ApolloClient, createHttpLink, InMemoryCache, split, HttpLink } from '@apollo/client'
+import { ApolloClient, createHttpLink, InMemoryCache, split } from '@apollo/client'
 import { onError } from '@apollo/link-error'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'
@@ -22,7 +22,7 @@ const splitLink = split(
   httpLink,
 )
 
-const errorLink = onError(({ graphQLErrors, networkError, response }) => {
+const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) =>
       consola.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),

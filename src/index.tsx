@@ -5,19 +5,19 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { ApolloProvider } from '@apollo/client'
 import apolloClient from './config/apollo'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { theme } from './config/theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ApolloProvider client={apolloClient}>
-        <ThemeProvider theme={theme}>
+    <ApolloProvider client={apolloClient}>
+      <ThemeProvider theme={theme}>
+        <Router>
           <App />
-        </ThemeProvider>
-      </ApolloProvider>
-    </Router>
+        </Router>
+      </ThemeProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )
