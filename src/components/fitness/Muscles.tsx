@@ -14,13 +14,11 @@ interface MuscleTable {
   [key: string]: boolean
 }
 
-const Muscles = ({
-  secondaryMuscles = [],
-  primaryMuscle,
-}: {
+interface MusclesProps {
   secondaryMuscles: IMuscle[]
   primaryMuscle: Partial<IMuscle>
-}) => {
+}
+const Muscles: React.FC<MusclesProps> = ({ secondaryMuscles = [], primaryMuscle }: MusclesProps) => {
   const activeSecondary = secondaryMuscles.reduce((acc: MuscleTable, muscle: IMuscle) => {
     return { ...acc, [muscle.name]: true }
   }, {})

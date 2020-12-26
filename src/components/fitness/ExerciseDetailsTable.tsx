@@ -1,5 +1,5 @@
 import React from 'react'
-import { gql, useMutation, useQuery, useSubscription } from '@apollo/client'
+import { gql, useMutation, useSubscription } from '@apollo/client'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -10,7 +10,6 @@ import TableRow from '@material-ui/core/TableRow'
 import Chip from '@material-ui/core/Chip'
 import Rating from '@material-ui/lab/Rating'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import logo from './test3.png'
 import Muscles, { IMuscle } from './Muscles'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -33,9 +32,9 @@ interface IAddExerciseDetailsTable {
   editExercise: (data: IExerciseDetails) => void
 }
 
-const ExerciseDetailsTable = ({ editExercise }: IAddExerciseDetailsTable) => {
+const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise }: IAddExerciseDetailsTable) => {
   const classes = useStyles()
-  const { data: exerciseDetails, loading } = useSubscription<ExerciseDetailsData>(EXERCISE_DETAILS_SUBSCRIPTION)
+  const { data: exerciseDetails } = useSubscription<ExerciseDetailsData>(EXERCISE_DETAILS_SUBSCRIPTION)
   const [deleteExerciseDetail] = useMutation(DELETE_EXERCISE_DETAIL)
 
   const primaryMuscle = (muscles: MuscleType[]): Partial<IMuscle> => {
@@ -62,7 +61,7 @@ const ExerciseDetailsTable = ({ editExercise }: IAddExerciseDetailsTable) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell width={300}>Exercide Name</TableCell>
+          <TableCell width={300}>Exercise Name</TableCell>
           <TableCell>Location</TableCell>
           <TableCell>Primary Muscle</TableCell>
           <TableCell>Secondary Muscles</TableCell>

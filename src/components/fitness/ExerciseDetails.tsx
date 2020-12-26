@@ -4,8 +4,6 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import Box from '@material-ui/core/Box'
-
 import Typography from '@material-ui/core/Typography'
 import ExerciseDetailsTable, { IExerciseDetails } from './ExerciseDetailsTable'
 import AddExerciseDetails, { ExerciseDetailsValues } from './AddExerciseDetails'
