@@ -7,7 +7,7 @@ import consola from 'consola'
 const httpLink = createHttpLink({ uri: 'https://wellness-backend.hasura.app/v1/graphql' })
 
 const wsLink = new WebSocketLink({
-  uri: `wss://wellness-backend.hasura.app/v1/graphql`,
+  uri: `wss://bbc.com`,
   options: {
     reconnect: true,
   },
