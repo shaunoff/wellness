@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Auth0Provider } from '@auth0/auth0-react'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { ApolloProvider } from '@apollo/client'
+//import { ApolloProvider } from '@apollo/client'
+import AuthorizedApolloProvider from './config/AuthorizedApolloProvider'
 import apolloClient from './config/apollo'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
@@ -11,13 +13,19 @@ import { theme } from './config/theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={apolloClient}>
+    <AuthorizedApolloProvider>
       <ThemeProvider theme={theme}>
         <Router>
-          <App />
+          <Auth0Provider
+            domain="shaunoff.us.auth0.com"
+            clientId="70XK1WSsTpt3S1MTu9kzJ6P4uQ6ZhlAL"
+            redirectUri={window.location.origin}
+          >
+            <App />
+          </Auth0Provider>
         </Router>
       </ThemeProvider>
-    </ApolloProvider>
+    </AuthorizedApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )
