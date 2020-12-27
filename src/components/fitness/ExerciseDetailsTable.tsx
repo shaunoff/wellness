@@ -124,8 +124,8 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
               />
             </TableCell>
             <TableCell>
-              <IconButton>
-                <EditIcon onClick={() => editExercise(row)} />
+              <IconButton onClick={() => editExercise(row)}>
+                <EditIcon />
               </IconButton>
               <IconButton onClick={() => handleDelete(row.id)}>
                 <DeleteIcon />
