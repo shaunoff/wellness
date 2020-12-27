@@ -22,6 +22,11 @@ const baseTheme = {
       fontSize: 14,
       color: 'rgba(0, 0, 0, 0.5)',
     },
+    h3: {
+      fontSize: 26,
+      fontWeight: 700,
+      color: 'rgba(0, 0, 0, 0.75)',
+    },
     h4: {
       fontSize: 24,
       fontWeight: 700,
@@ -86,6 +91,23 @@ const baseTheme = {
       },
       body: {
         fontWeight: 500,
+      },
+    },
+    MuiTypography: {
+      colorTextSecondary: {
+        color: 'rgba(0, 0, 0, 0.4)',
+      },
+    },
+    MuiPaper: {
+      elevation1: {
+        boxShadow: '0 0 12px #ddd',
+      },
+    },
+    MuiButton: {
+      root: {
+        // eslint-disable-next-line
+        textTransform: 'none' as any,
+        fontWeight: 700,
       },
     },
   },

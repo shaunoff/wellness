@@ -61,7 +61,7 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell width={300}>Exercise Name</TableCell>
+          <TableCell width={200}>Exercise Name</TableCell>
           <TableCell>Location</TableCell>
           <TableCell>Primary Muscle</TableCell>
           <TableCell>Secondary Muscles</TableCell>
@@ -79,7 +79,7 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
               <Typography variant="body2">{row.comments}</Typography>
             </TableCell>
             <TableCell>
-              <div style={{ width: '80px', boxShadow: 'inset 0 0 5px 5px #fff' }}>
+              <div style={{ width: '80px' }}>
                 <Muscles primaryMuscle={primaryMuscle(row.muscles)} secondaryMuscles={secondaryMuscles(row.muscles)} />
               </div>
             </TableCell>
