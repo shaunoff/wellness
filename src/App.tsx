@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 
 const App: React.FC = () => {
   return (
-    <div className="App" style={{ background: '#FAFAFD', minHeight: '100vh' }}>
+    <div className="App" style={{ background: '#f0f2f5', minHeight: '100vh' }}>
       <Navbar />
       <Grid container spacing={1}>
         <Grid item xs={2}>
