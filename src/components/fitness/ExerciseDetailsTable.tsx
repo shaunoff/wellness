@@ -36,7 +36,6 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
   const classes = useStyles()
   const { data: exerciseDetails } = useSubscription<ExerciseDetailsData>(EXERCISE_DETAILS_SUBSCRIPTION)
   const [deleteExerciseDetail] = useMutation(DELETE_EXERCISE_DETAIL)
-
   const primaryMuscle = (muscles: MuscleType[]): Partial<IMuscle> => {
     const primaryMuscle = muscles.find((muscle) => {
       return muscle.type === 'primary'
