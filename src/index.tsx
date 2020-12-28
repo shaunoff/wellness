@@ -4,28 +4,28 @@ import { Auth0Provider } from '@auth0/auth0-react'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-//import { ApolloProvider } from '@apollo/client'
 import AuthorizedApolloProvider from './config/AuthorizedApolloProvider'
-import apolloClient from './config/apollo'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { theme } from './config/theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthorizedApolloProvider>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Auth0Provider
-            domain="shaunoff.us.auth0.com"
-            clientId="70XK1WSsTpt3S1MTu9kzJ6P4uQ6ZhlAL"
-            redirectUri={window.location.origin}
-          >
+    <Auth0Provider
+      domain="shaunoff.us.auth0.com"
+      clientId="70XK1WSsTpt3S1MTu9kzJ6P4uQ6ZhlAL"
+      redirectUri={window.location.origin}
+      audience="https://shaunoff.us.auth0.com/api/v2/"
+      scope="read:current_user update:current_user_metadata"
+    >
+      <AuthorizedApolloProvider>
+        <ThemeProvider theme={theme}>
+          <Router>
             <App />
-          </Auth0Provider>
-        </Router>
-      </ThemeProvider>
-    </AuthorizedApolloProvider>
+          </Router>
+        </ThemeProvider>
+      </AuthorizedApolloProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 )

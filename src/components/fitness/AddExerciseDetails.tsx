@@ -28,7 +28,8 @@ interface IAddExerciseDetails {
 const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, setOpen }: IAddExerciseDetails) => {
   const [createExerciseDetail] = useMutation(CREATE_EXERCISE_DETAIL)
   const [updateExerciseDetail] = useMutation(UPDATE_EXERCISE_DETAIL)
-  const { data: muscleGroups } = useQuery<MusclesData>(GET_MUSCLES)
+  const { data: muscleGroups, error } = useQuery<MusclesData>(GET_MUSCLES)
+  console.log(error)
   const normalizeExerciseDetail = useCallback((): ExerciseDetailsValues => {
     if (!editData) {
       return initialValues
