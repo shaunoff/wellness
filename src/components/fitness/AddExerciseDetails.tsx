@@ -137,7 +137,6 @@ function ensure<T>(argument: T | undefined | null): T {
 
 const CREATE_EXERCISE_DETAIL = gql`
   mutation CreateExerciseDetail(
-    $id: Int
     $exerciseName: String
     $equipment: String
     $type: String

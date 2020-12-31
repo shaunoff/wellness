@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Chip from '@material-ui/core/Chip'
+import Paper from '@material-ui/core/Paper'
 import Rating from '@material-ui/lab/Rating'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import Muscles, { IMuscle } from './Muscles'
@@ -57,83 +58,88 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
 
   if (!exerciseDetails) return <div>Loading</div>
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell width={200}>Exercise Name</TableCell>
-          <TableCell>Location</TableCell>
-          <TableCell>Primary Muscle</TableCell>
-          <TableCell>Secondary Muscles</TableCell>
-          <TableCell>Equipment</TableCell>
-          <TableCell>Type</TableCell>
-          <TableCell>Level</TableCell>
-          <TableCell />
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {exerciseDetails.exerciseDetails.map((row: IExerciseDetails) => (
-          <TableRow key={row.id}>
-            <TableCell>
-              <Typography variant="h6">{row.exerciseName}</Typography>
-              <Typography variant="body2">{row.comments}</Typography>
-            </TableCell>
-            <TableCell>
-              <div style={{ width: '80px' }}>
-                <Muscles primaryMuscle={primaryMuscle(row.muscles)} secondaryMuscles={secondaryMuscles(row.muscles)} />
-              </div>
-            </TableCell>
-            <TableCell>
-              {row.muscles
-                .filter((muscleType) => muscleType.type === 'primary')
-                .map((muscleType) => (
-                  <Chip
-                    className={classes.chip}
-                    key={muscleType.muscle.id}
-                    label={muscleType.muscle.label}
-                    color="primary"
-                  />
-                ))}
-            </TableCell>
-            <TableCell>
-              {row.muscles
-                .filter((muscle) => muscle.type === 'secondary')
-                .map((muscle) => (
-                  <Chip
-                    className={classes.chip}
-                    key={muscle.muscle.id}
-                    label={muscle.muscle.label}
-                    variant="outlined"
-                    color="primary"
-                  />
-                ))}
-            </TableCell>
-            <TableCell>{row.equipment}</TableCell>
-            <TableCell>{row.type}</TableCell>
-            <TableCell>
-              <Rating
-                classes={{
-                  iconFilled: classes.iconFilled,
-                  iconEmpty: classes.iconEmpty,
-                }}
-                value={row.difficulty}
-                precision={1}
-                max={3}
-                readOnly
-                icon={<FiberManualRecordIcon fontSize="inherit" />}
-              />
-            </TableCell>
-            <TableCell>
-              <IconButton onClick={() => editExercise(row)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton onClick={() => handleDelete(row.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </TableCell>
+    <Paper style={{ margin: '16px 0px', padding: '16px' }} elevation={1}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell width={200}>Exercise Name</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Primary Muscle</TableCell>
+            <TableCell>Secondary Muscles</TableCell>
+            <TableCell>Equipment</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell>Level</TableCell>
+            <TableCell />
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHead>
+        <TableBody>
+          {exerciseDetails.exerciseDetails.map((row: IExerciseDetails) => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <Typography variant="h6">{row.exerciseName}</Typography>
+                <Typography variant="body2">{row.comments}</Typography>
+              </TableCell>
+              <TableCell>
+                <div style={{ width: '80px' }}>
+                  <Muscles
+                    primaryMuscle={primaryMuscle(row.muscles)}
+                    secondaryMuscles={secondaryMuscles(row.muscles)}
+                  />
+                </div>
+              </TableCell>
+              <TableCell>
+                {row.muscles
+                  .filter((muscleType) => muscleType.type === 'primary')
+                  .map((muscleType) => (
+                    <Chip
+                      className={classes.chip}
+                      key={muscleType.muscle.id}
+                      label={muscleType.muscle.label}
+                      color="primary"
+                    />
+                  ))}
+              </TableCell>
+              <TableCell>
+                {row.muscles
+                  .filter((muscle) => muscle.type === 'secondary')
+                  .map((muscle) => (
+                    <Chip
+                      className={classes.chip}
+                      key={muscle.muscle.id}
+                      label={muscle.muscle.label}
+                      variant="outlined"
+                      color="primary"
+                    />
+                  ))}
+              </TableCell>
+              <TableCell>{row.equipment}</TableCell>
+              <TableCell>{row.type}</TableCell>
+              <TableCell>
+                <Rating
+                  classes={{
+                    iconFilled: classes.iconFilled,
+                    iconEmpty: classes.iconEmpty,
+                  }}
+                  value={row.difficulty}
+                  precision={1}
+                  max={3}
+                  readOnly
+                  icon={<FiberManualRecordIcon fontSize="inherit" />}
+                />
+              </TableCell>
+              <TableCell>
+                <IconButton onClick={() => editExercise(row)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => handleDelete(row.id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
   )
 }
 
