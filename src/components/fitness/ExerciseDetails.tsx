@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import ExerciseDetailsTable, { IExerciseDetails } from './ExerciseDetailsTable'
 import AddExerciseDetails, { ExerciseDetailsValues } from './AddExerciseDetails'
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import PageHeader from '../app/PageHeader'
 
 const ExerciseDetails: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -31,7 +29,6 @@ const ExerciseDetails: React.FC = () => {
   }
   return (
     <div>
-      {/* <button onClick={() => setOpen(true)}>open</button> */}
       <Dialog onClose={handleClose} open={open} maxWidth="lg">
         <DialogTitle id="max-width-dialog-title">
           <Typography variant="h4">Create Exercise</Typography>
@@ -45,14 +42,7 @@ const ExerciseDetails: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <PageHeader>
-        <Button onClick={() => setOpen(true)} variant="contained" color="primary">
-          Create Exercise
-        </Button>
-      </PageHeader>
-      <Paper style={{ margin: '16px', padding: '16px' }} elevation={1}>
-        <ExerciseDetailsTable editExercise={editExercise} />
-      </Paper>
+      <ExerciseDetailsTable editExercise={editExercise} />
     </div>
   )
 }

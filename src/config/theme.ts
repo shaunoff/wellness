@@ -47,9 +47,13 @@ const baseTheme = {
   palette: {
     primary: {
       main: '#247ae3',
+      dark: '#004fb0',
+      light: '#6ca8ff',
     },
     secondary: {
-      main: '#a7caf4',
+      main: '#e3f2fd',
+      dark: '#b1bfca',
+      light: '#ffffff',
     },
     error: {
       main: '#EB011E',
@@ -108,6 +112,21 @@ const baseTheme = {
         // eslint-disable-next-line
         textTransform: 'none' as any,
         fontWeight: 700,
+      },
+    },
+    MuiTab: {
+      root: {
+        textTransform: 'none' as any,
+        fontWeight: 700,
+      },
+    },
+    MuiTabs: {
+      root: {
+        marginTop: '0px',
+      },
+      indicator: {
+        height: '3px',
+        borderRadius: '3px',
       },
     },
   },

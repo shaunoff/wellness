@@ -3,10 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import logo from './Sprightly.svg'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,10 +15,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      flexGrow: 1,
+      //flexGrow: 1,
     },
     appbar: {
       background: 'white',
+    },
+    toolbar: {
+      display: 'flex',
+      justifyContent: 'space-between',
     },
   }),
 )
@@ -32,13 +34,8 @@ const Navbar: React.FC = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appbar} elevation={1}>
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
+        <Toolbar className={classes.toolbar}>
+          <img src={logo} style={{ paddingLeft: '32px', height: '26px' }} className={classes.title} />
           {isAuthenticated && <Button onClick={() => logout()}>Logout</Button>}
         </Toolbar>
       </AppBar>
