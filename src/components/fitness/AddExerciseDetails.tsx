@@ -6,10 +6,13 @@ import { TextField } from 'formik-material-ui'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import CheckboxGroupField from '../form/CheckboxGroupField'
 import RatingField from '../form/RatingField'
-import { IExerciseDetails } from './ExerciseDetailsTable'
+//import { IExerciseDetails } from './ExerciseDetailsTable'
 import { Typography } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
-import Muscles, { IMuscle } from './Muscles'
+import Muscles from './Muscles'
+
+import { IExerciseDetailsFormValues, IExerciseDetails } from './exerciseDetailsInterfaces'
+import { IMusclesData } from './muscleInterfaces'
 
 const schema = Yup.object().shape({
   exerciseName: Yup.string().required(),
@@ -20,7 +23,7 @@ const schema = Yup.object().shape({
 })
 
 interface IAddExerciseDetails {
-  formRef: RefObject<FormikProps<ExerciseDetailsValues>>
+  formRef: RefObject<FormikProps<IExerciseDetailsFormValues>>
   editData: IExerciseDetails | null
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -28,13 +31,13 @@ interface IAddExerciseDetails {
 const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, setOpen }: IAddExerciseDetails) => {
   const [createExerciseDetail] = useMutation(CREATE_EXERCISE_DETAIL)
   const [updateExerciseDetail] = useMutation(UPDATE_EXERCISE_DETAIL)
-  const { data: muscleGroups, error } = useQuery<MusclesData>(GET_MUSCLES)
-  console.log(error)
-  const normalizeExerciseDetail = useCallback((): ExerciseDetailsValues => {
+  const { data: muscleGroups } = useQuery<IMusclesData>(GET_MUSCLES)
+
+  const normalizeExerciseDetail = useCallback((): IExerciseDetailsFormValues => {
     if (!editData) {
       return initialValues
     }
-    const values: ExerciseDetailsValues = { ...editData, primaryMuscleId: '', secondaryMuscles: [] }
+    const values: IExerciseDetailsFormValues = { ...editData, primaryMuscleId: '', secondaryMuscles: [] }
     values.primaryMuscleId =
       editData && ensure(editData.muscles.find((muscles) => muscles.type === 'primary')).muscle.id
     values.secondaryMuscles =
@@ -48,7 +51,6 @@ const AddExerciseDetails: React.FC<IAddExerciseDetails> = ({ formRef, editData, 
       initialValues={editData ? normalizeExerciseDetail() : initialValues}
       onSubmit={(values) => {
         if (editData) {
-          console.log('gfhjfgjdshfghjs', { ...values, muscles: combineMuscles(values, editData.id).data })
           updateExerciseDetail({ variables: { ...values, muscles: combineMuscles(values, editData.id).data } })
             .then(() => setOpen(false))
             .catch((err) => console.log(err))
@@ -137,7 +139,6 @@ function ensure<T>(argument: T | undefined | null): T {
 
 const CREATE_EXERCISE_DETAIL = gql`
   mutation CreateExerciseDetail(
-    $id: Int
     $exerciseName: String
     $equipment: String
     $type: String
@@ -193,7 +194,7 @@ const UPDATE_EXERCISE_DETAIL = gql`
   }
 `
 
-const combineMuscles = (values: ExerciseDetailsValues, exerciseDetailsId?: IExerciseDetails['id']) => {
+const combineMuscles = (values: IExerciseDetailsFormValues, exerciseDetailsId?: IExerciseDetails['id']) => {
   const { primaryMuscleId, secondaryMuscles } = values
   return {
     data: [
@@ -207,7 +208,7 @@ const combineMuscles = (values: ExerciseDetailsValues, exerciseDetailsId?: IExer
   }
 }
 
-const GET_MUSCLES = gql`
+export const GET_MUSCLES = gql`
   query GetMuscles {
     muscle {
       name
@@ -217,16 +218,12 @@ const GET_MUSCLES = gql`
   }
 `
 
-interface MusclesData {
-  muscle: IMuscle[]
-}
+// export interface ExerciseDetailsValues extends IExerciseDetails {
+//   primaryMuscleId: number | string
+//   secondaryMuscles: IMuscle[]
+// }
 
-export interface ExerciseDetailsValues extends IExerciseDetails {
-  primaryMuscleId: number | string
-  secondaryMuscles: IMuscle[]
-}
-
-const initialValues: ExerciseDetailsValues = {
+const initialValues: IExerciseDetailsFormValues = {
   id: '',
   exerciseName: '',
   equipment: '',

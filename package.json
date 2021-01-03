@@ -6,6 +6,11 @@
     "@apollo/client": "^3.3.6",
     "@apollo/link-error": "^2.0.0-beta.3",
     "@auth0/auth0-react": "^1.2.0",
+    "@graphql-codegen/cli": "^1.20.0",
+    "@graphql-codegen/introspection": "^1.18.1",
+    "@graphql-codegen/typescript": "^1.20.0",
+    "@graphql-codegen/typescript-operations": "^1.17.13",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.1",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -17,6 +22,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
+    "clsx": "^1.1.1",
     "consola": "^2.15.0",
     "formik": "^2.2.6",
     "formik-material-ui": "^3.0.1",
@@ -35,7 +41,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "generate": "graphql-codegen --config codegen.js"
   },
   "eslintConfig": {
     "extends": [

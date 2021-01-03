@@ -1,18 +1,14 @@
 import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-// import ListSubheader from '@material-ui/core/ListSubheader'
+import clsx from 'clsx'
+import { useLocation } from 'react-router-dom'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import SendIcon from '@material-ui/icons/Send'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import StarBorder from '@material-ui/icons/StarBorder'
+import { NavLink } from 'react-router-dom'
+import { PageSkeletonProps } from './PageSkeleton'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,51 +20,59 @@ const useStyles = makeStyles((theme: Theme) =>
     nested: {
       paddingLeft: '32px',
     },
+    item: {
+      textDecoration: 'none',
+      '&:hover': {
+        background: theme.palette.secondary.main,
+      },
+    },
+    text: {
+      textDecoration: 'none',
+      color: 'rgba(0,0,0,0.26)',
+    },
+    activeText: {
+      textDecoration: 'none',
+      color: theme.palette.primary.main,
+    },
+    activeItem: {
+      textDecoration: 'none',
+      borderLeft: `3px ${theme.palette.primary.main} solid`,
+      '&:hover': {
+        background: theme.palette.secondary.main,
+      },
+    },
   }),
 )
 
-const Sidebar: React.FC = () => {
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(true)
+interface SidebarProps {
+  sections: PageSkeletonProps[]
+}
 
-  const handleClick = () => {
-    setOpen(!open)
-  }
+const Sidebar: React.FC<SidebarProps> = ({ sections }: SidebarProps) => {
+  const { pathname } = useLocation()
+  const classes = useStyles()
   return (
     <Paper
       style={{ margin: '16px 0px 0px 16px', padding: '16px 0px', minHeight: 'calc( 100vh - 130px)' }}
       elevation={1}
     >
       <List component="nav" className={classes.root}>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Sent mail" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DraftsIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem>
-        <ListItem button onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Fitness" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+        {sections.map(({ label, name, route, SectionIcon }) => (
+          <NavLink to={`${route}`} className={classes.item} key={name}>
+            <ListItem button className={clsx(pathname.includes(route) && classes.activeItem, classes.item)}>
               <ListItemIcon>
-                <StarBorder color="secondary" />
+                <SectionIcon color={pathname.includes(route) ? 'primary' : 'disabled'} />
               </ListItemIcon>
-              <ListItemText primary="Exercise Details" />
+              <ListItemText
+                primary={label}
+                primaryTypographyProps={{
+                  variant: 'h6',
+                  className: pathname.includes(route) ? classes.activeText : classes.text,
+                }}
+              />
             </ListItem>
-          </List>
-        </Collapse>
+          </NavLink>
+        ))}
       </List>
     </Paper>
   )
