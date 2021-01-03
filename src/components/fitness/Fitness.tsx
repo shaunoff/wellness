@@ -1,7 +1,7 @@
 import React from 'react'
 import PageSkeleton, { PageSkeletonProps } from '../app/PageSkeleton'
 import ExerciseDetails from './ExerciseDetails'
-import Workouts from './Workouts'
+import CreateWorkout from './CreateWorkout'
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter'
 
 const Fitness: React.FC = () => <PageSkeleton {...fitnessMap} />
@@ -21,9 +21,9 @@ export const fitnessMap: PageSkeletonProps = {
     },
     {
       name: 'workouts',
-      label: 'Workouts',
-      route: '/workouts',
-      Component: Workouts,
+      label: 'Create Workout',
+      route: '/create',
+      Component: CreateWorkout,
     },
   ],
 }

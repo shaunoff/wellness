@@ -90,8 +90,8 @@ const baseTheme = {
     },
     MuiTableCell: {
       head: {
-        fontWeight: 700,
-        fontSize: 18,
+        fontWeight: 600,
+        fontSize: 16,
       },
       body: {
         fontWeight: 500,
@@ -116,6 +116,7 @@ const baseTheme = {
     },
     MuiTab: {
       root: {
+        // eslint-disable-next-line
         textTransform: 'none' as any,
         fontWeight: 700,
       },

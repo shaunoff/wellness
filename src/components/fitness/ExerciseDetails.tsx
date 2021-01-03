@@ -5,9 +5,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Typography from '@material-ui/core/Typography'
-import ExerciseDetailsTable, { IExerciseDetails } from './ExerciseDetailsTable'
-import AddExerciseDetails, { ExerciseDetailsValues } from './AddExerciseDetails'
+import ExerciseDetailsTable from './ExerciseDetailsTable'
+import AddExerciseDetails from './AddExerciseDetails'
 import Button from '@material-ui/core/Button'
+// Interfaces
+import { IExerciseDetailsFormValues, IExerciseDetails } from './exerciseDetailsInterfaces'
 
 const ExerciseDetails: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -16,7 +18,7 @@ const ExerciseDetails: React.FC = () => {
     setOpen(false)
     setEditData(null)
   }
-  const formRef = useRef<FormikProps<ExerciseDetailsValues>>(null)
+  const formRef = useRef<FormikProps<IExerciseDetailsFormValues>>(null)
 
   const handleSubmit = () => {
     if (formRef.current) {

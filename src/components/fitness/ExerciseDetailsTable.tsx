@@ -11,10 +11,13 @@ import Chip from '@material-ui/core/Chip'
 import Paper from '@material-ui/core/Paper'
 import Rating from '@material-ui/lab/Rating'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import Muscles, { IMuscle } from './Muscles'
+import Muscles from './Muscles'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
+// interfaces
+import { IExerciseDetailsData, IExerciseDetails } from './exerciseDetailsInterfaces'
+import { IMuscleType, IMuscle } from './muscleInterfaces'
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -33,24 +36,25 @@ interface IAddExerciseDetailsTable {
   editExercise: (data: IExerciseDetails) => void
 }
 
+export const primaryMuscle = (muscles: IMuscleType[]): Partial<IMuscle> => {
+  const primaryMuscle = muscles.find((muscle) => {
+    return muscle.type === 'primary'
+  })
+  if (!primaryMuscle) return {}
+  return primaryMuscle.muscle
+}
+
+export const secondaryMuscles = (muscles: IMuscleType[]): IMuscle[] => {
+  const secondaryMuscles = muscles.filter((muscle) => {
+    return muscle.type === 'secondary'
+  })
+  return secondaryMuscles.map((muscle): IMuscle => muscle.muscle)
+}
+
 const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise }: IAddExerciseDetailsTable) => {
   const classes = useStyles()
-  const { data: exerciseDetails } = useSubscription<ExerciseDetailsData>(EXERCISE_DETAILS_SUBSCRIPTION)
+  const { data: exerciseDetails } = useSubscription<IExerciseDetailsData>(EXERCISE_DETAILS_SUBSCRIPTION)
   const [deleteExerciseDetail] = useMutation(DELETE_EXERCISE_DETAIL)
-  const primaryMuscle = (muscles: MuscleType[]): Partial<IMuscle> => {
-    const primaryMuscle = muscles.find((muscle) => {
-      return muscle.type === 'primary'
-    })
-    if (!primaryMuscle) return {}
-    return primaryMuscle.muscle
-  }
-
-  const secondaryMuscles = (muscles: MuscleType[]): IMuscle[] => {
-    const secondaryMuscles = muscles.filter((muscle) => {
-      return muscle.type === 'secondary'
-    })
-    return secondaryMuscles.map((muscle): IMuscle => muscle.muscle)
-  }
 
   const handleDelete = (id: IExerciseDetails['id']) => {
     deleteExerciseDetail({ variables: { id } }).catch((err) => console.log(err))
@@ -143,25 +147,6 @@ const ExerciseDetailsTable: React.FC<IAddExerciseDetailsTable> = ({ editExercise
   )
 }
 
-interface ExerciseDetailsData {
-  exerciseDetails: IExerciseDetails[]
-}
-
-interface MuscleType {
-  type: 'primary' | 'secondary'
-  muscle: IMuscle
-}
-
-export interface IExerciseDetails {
-  id: string | number
-  exerciseName: string
-  equipment: string
-  difficulty: number
-  type: string
-  muscles: MuscleType[]
-  comments: string
-}
-
 const EXERCISE_DETAILS_SUBSCRIPTION = gql`
   subscription ExerciseDetailsSubscription {
     exerciseDetails(order_by: { exerciseName: asc }) {
@@ -183,7 +168,7 @@ const EXERCISE_DETAILS_SUBSCRIPTION = gql`
   }
 `
 const DELETE_EXERCISE_DETAIL = gql`
-  mutation MyMutation($id: Int) {
+  mutation DeleteExerciseDetail($id: Int) {
     delete_exerciseDetails(where: { id: { _eq: $id } }) {
       returning {
         id
